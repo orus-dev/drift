@@ -1,24 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import { Color, getColor } from "@/lib/ui/color";
 import { PlusIcon } from "lucide-react";
-
-type Task = {
-  id: string;
-  title: string;
-  description?: string;
-  tags?: { name: string; color: Color }[];
-};
+import { Task } from "@/lib/types";
+import BoardTask from "./Task";
 
 const columnLabels: Record<string, string> = {
   todo: "To do",
@@ -125,30 +113,7 @@ export default function BoardView() {
                           index={index}
                         >
                           {(provided) => (
-                            <Card
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className="bg-background"
-                            >
-                              <CardHeader>
-                                <CardTitle>{task.title}</CardTitle>
-                                <CardDescription>
-                                  {task.description}
-                                </CardDescription>
-                              </CardHeader>
-                              <CardContent className="flex flex-wrap gap-2 overflow-hidden">
-                                {task.tags?.map((tag, i) => (
-                                  <span
-                                    key={tag.name}
-                                    style={getColor(tag.color)}
-                                    className="inline-flex items-center py-0.5 px-1.5 rounded-sm max-w-full truncate"
-                                  >
-                                    {tag.name}
-                                  </span>
-                                ))}
-                              </CardContent>
-                            </Card>
+                            <BoardTask provided={provided} task={task} />
                           )}
                         </Draggable>
                       ))}
