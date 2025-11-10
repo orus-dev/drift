@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -31,26 +31,34 @@ const id = (prefix = "t") =>
 
 export default function BoardView() {
   const [columns, setColumns] = useState<Record<string, Task[]>>({
-    todo: [
-      { id: id(), title: "Buy groceries" },
-      { id: id(), title: "Plan sprint" },
-    ],
-    inprogress: [
-      {
-        id: id(),
-        title: "Build header",
-        description: "A simple description",
-        tags: [
-          { name: "Website", color: "pink" },
-          { name: "Development", color: "blue" },
-          { name: "API", color: "green" },
-          { name: "App", color: "purple" },
-          { name: "Rust", color: "orange" },
-        ],
-      },
-    ],
+    todo: [],
+    inprogress: [],
     done: [],
   });
+
+  useEffect(() => {
+    setColumns({
+      todo: [
+        { id: id(), title: "Buy groceries" },
+        { id: id(), title: "Plan sprint" },
+      ],
+      inprogress: [
+        {
+          id: id(),
+          title: "Build header",
+          description: "A simple description",
+          tags: [
+            { name: "Website", color: "pink" },
+            { name: "Development", color: "blue" },
+            { name: "API", color: "green" },
+            { name: "App", color: "purple" },
+            { name: "Rust", color: "orange" },
+          ],
+        },
+      ],
+      done: [],
+    });
+  }, []);
 
   function onDragEnd(result: any) {
     const { source, destination } = result;
@@ -87,7 +95,7 @@ export default function BoardView() {
                 <Card
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="min-h-[170px] bg-background"
+                  className="bg-background"
                 >
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">
