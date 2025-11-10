@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { MultiSelect } from "@/components/ui/multi-select";
 import {
   Sheet,
   SheetContent,
@@ -16,17 +17,19 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Task } from "@/lib/types";
-import { getColor } from "@/lib/ui/color";
+import { Color, getColor } from "@/lib/ui/color";
 import { DraggableProvided } from "@hello-pangea/dnd";
 
 export default function BoardTask({
   task,
   provided,
   setTask,
+  tags,
 }: {
   task: Task;
   setTask: (t: Task) => void;
   provided: DraggableProvided;
+  tags: Record<string, { color: Color; name: string }>;
 }) {
   return (
     <Sheet>
@@ -44,11 +47,11 @@ export default function BoardTask({
           <CardContent className="flex flex-wrap gap-2 overflow-hidden">
             {task.tags?.map((tag, i) => (
               <span
-                key={tag.name}
-                style={getColor(tag.color)}
+                key={tag}
+                style={getColor(tags[tag].color)}
                 className="inline-flex items-center py-0.5 px-1.5 rounded-sm max-w-full truncate"
               >
-                {tag.name}
+                {tags[tag].name}
               </span>
             ))}
           </CardContent>
@@ -56,7 +59,7 @@ export default function BoardTask({
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
+          <SheetTitle>Edit task</SheetTitle>
           <SheetDescription>
             Make changes to the task here. Click save when you&apos;re done.
           </SheetDescription>
@@ -77,6 +80,27 @@ export default function BoardTask({
                 setTask({ ...task, description: e.target.value })
               }
             />
+          </div>
+          <div className="grid gap-3">
+            <Label>Status</Label>
+            <MultiSelect
+              options={Object.entries(tags).map(([id, tag]) => ({
+                label: tag.name,
+                value: id,
+                style: {
+                  iconColor: getColor(tag.color).color,
+                  badgeColor: getColor(tag.color).backgroundColor,
+                },
+              }))}
+              onValueChange={(tags) => setTask({ ...task, tags })}
+              defaultValue={task.tags}
+            />
+            {/* <Input
+              defaultValue={task.description}
+              onChange={(e) =>
+                setTask({ ...task, description: e.target.value })
+              }
+            /> */}
           </div>
         </div>
       </SheetContent>

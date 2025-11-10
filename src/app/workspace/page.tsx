@@ -16,15 +16,9 @@ export default function Workspace() {
       { id: id(), title: "Plan sprint", status: "todo" },
       {
         id: id(),
-        title: "Build header",
+        title: "Build App",
         description: "A simple description",
-        tags: [
-          { name: "Website", color: "pink" },
-          { name: "Development", color: "blue" },
-          { name: "API", color: "green" },
-          { name: "App", color: "purple" },
-          { name: "Rust", color: "orange" },
-        ],
+        tags: ["website", "api", "app"],
         status: "inprogress",
       },
     ]);
@@ -40,6 +34,15 @@ export default function Workspace() {
   };
 
   return (
-    <BoardView tasks={tasks} setTasks={setTasks} createTask={createTask} />
+    <BoardView
+      tasks={tasks}
+      setTasks={setTasks}
+      createTask={createTask}
+      tags={{
+        website: { color: "yellow", name: "Website" },
+        api: { color: "purple", name: "API" },
+        app: { color: "blue", name: "App" },
+      }}
+    />
   );
 }

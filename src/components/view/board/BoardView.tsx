@@ -6,6 +6,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { PlusIcon } from "lucide-react";
 import { SetState, Task } from "@/lib/types";
 import BoardTask from "./Task";
+import { Color } from "@/lib/ui/color";
 
 const columnLabels: Record<string, string> = {
   todo: "To do",
@@ -14,10 +15,12 @@ const columnLabels: Record<string, string> = {
 };
 
 export default function BoardView({
+  tags,
   tasks,
   setTasks,
   createTask,
 }: {
+  tags: Record<string, { color: Color; name: string }>;
   tasks: Task[];
   setTasks: SetState<Task[]>;
   createTask: (status: string) => void;
@@ -93,6 +96,7 @@ export default function BoardView({
                                 }
                                 provided={provided}
                                 task={task}
+                                tags={tags}
                               />
                             )}
                           </Draggable>
