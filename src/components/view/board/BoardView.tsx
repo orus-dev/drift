@@ -113,7 +113,16 @@ export default function BoardView() {
                           index={index}
                         >
                           {(provided) => (
-                            <BoardTask provided={provided} task={task} />
+                            <BoardTask
+                              setTask={(t) =>
+                                setColumns((cols) => {
+                                  cols[colKey][index] = t;
+                                  return cols;
+                                })
+                              }
+                              provided={provided}
+                              task={task}
+                            />
                           )}
                         </Draggable>
                       ))}

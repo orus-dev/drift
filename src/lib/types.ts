@@ -6,3 +6,5 @@ export type Task = {
   description?: string;
   tags?: { name: string; color: Color }[];
 };
+
+export type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
