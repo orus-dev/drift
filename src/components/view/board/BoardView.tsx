@@ -18,59 +18,53 @@ const id = (prefix = "t") =>
   `${prefix}_${Math.random().toString(36).slice(2, 9)}`;
 
 export default function BoardView() {
-  const [columns, setColumns] = useState<Record<string, Task[]>>({
-    todo: [],
-    inprogress: [],
-    done: [],
-  });
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
-    setColumns({
-      todo: [
-        { id: id(), title: "Buy groceries" },
-        { id: id(), title: "Plan sprint" },
-      ],
-      inprogress: [
-        {
-          id: id(),
-          title: "Build header",
-          description: "A simple description",
-          tags: [
-            { name: "Website", color: "pink" },
-            { name: "Development", color: "blue" },
-            { name: "API", color: "green" },
-            { name: "App", color: "purple" },
-            { name: "Rust", color: "orange" },
-          ],
-        },
-      ],
-      done: [],
-    });
+    setTasks([
+      { id: id(), title: "Buy groceries", status: "todo" },
+      { id: id(), title: "Plan sprint", status: "todo" },
+      {
+        id: id(),
+        title: "Build header",
+        description: "A simple description",
+        tags: [
+          { name: "Website", color: "pink" },
+          { name: "Development", color: "blue" },
+          { name: "API", color: "green" },
+          { name: "App", color: "purple" },
+          { name: "Rust", color: "orange" },
+        ],
+        status: "inprogress",
+      },
+    ]);
   }, []);
 
   function onDragEnd(result: any) {
-    const { source, destination } = result;
+    const { draggableId, source, destination } = result;
     if (!destination) return;
 
-    const sourceCol = source.droppableId;
-    const destCol = destination.droppableId;
+    setTasks((tasks) => {
+      const taskIndex = tasks.findIndex((task) => task.id === draggableId);
+      const task = tasks[taskIndex];
+      tasks.splice(taskIndex, 1);
 
-    if (sourceCol === destCol) {
-      const items = Array.from(columns[sourceCol]);
-      const [moved] = items.splice(source.index, 1);
-      items.splice(destination.index, 0, moved);
-      setColumns({ ...columns, [sourceCol]: items });
-    } else {
-      const sourceItems = Array.from(columns[sourceCol]);
-      const destItems = Array.from(columns[destCol]);
-      const [moved] = sourceItems.splice(source.index, 1);
-      destItems.splice(destination.index, 0, moved);
-      setColumns({
-        ...columns,
-        [sourceCol]: sourceItems,
-        [destCol]: destItems,
+      const destinationGroupStartIndex = tasks.findIndex(
+        (t) => t.status === destination.droppableId
+      );
+
+      const insertIndex =
+        destinationGroupStartIndex === -1
+          ? tasks.length
+          : destinationGroupStartIndex + destination.index;
+
+      tasks.splice(insertIndex, 0, {
+        ...task,
+        status: destination.droppableId,
       });
-    }
+
+      return tasks;
+    });
   }
 
   return (
@@ -93,11 +87,12 @@ export default function BoardView() {
                         className="ml-auto"
                         variant="outline"
                         onClick={() => {
-                          const t: Task = { id: id(), title: "New task" };
-                          setColumns((c) => ({
-                            ...c,
-                            [colKey]: [...c[colKey], t],
-                          }));
+                          const t: Task = {
+                            id: id(),
+                            title: "New task",
+                            status: colKey,
+                          };
+                          setTasks((c) => [...c, t]);
                         }}
                       >
                         <PlusIcon />
@@ -106,28 +101,30 @@ export default function BoardView() {
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-col gap-3">
-                      {columns[colKey].map((task, index) => (
-                        <Draggable
-                          key={task.id}
-                          draggableId={task.id}
-                          index={index}
-                        >
-                          {(provided) => (
-                            <BoardTask
-                              setTask={(t) =>
-                                setColumns((cols) => {
-                                  cols[colKey][index] = t;
-                                  return cols;
-                                })
-                              }
-                              provided={provided}
-                              task={task}
-                            />
-                          )}
-                        </Draggable>
-                      ))}
+                      {tasks
+                        .filter((task) => task.status === colKey)
+                        .map((task, index) => (
+                          <Draggable
+                            key={task.id}
+                            draggableId={task.id}
+                            index={index}
+                          >
+                            {(provided) => (
+                              <BoardTask
+                                setTask={(t) =>
+                                  setTasks((cols) =>
+                                    cols.map((c) => (c.id === t.id ? t : c))
+                                  )
+                                }
+                                provided={provided}
+                                task={task}
+                              />
+                            )}
+                          </Draggable>
+                        ))}
                       {provided.placeholder}
-                      {columns[colKey].length === 0 && (
+                      {tasks.filter((task) => task.status === colKey).length ===
+                        0 && (
                         <p className="text-sm text-muted-foreground">
                           No tasks
                         </p>
