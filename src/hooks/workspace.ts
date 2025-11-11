@@ -2,12 +2,19 @@ import { SidebarEntity } from "@/components/sidebar/Entity";
 import { SetState, Task } from "@/lib/types";
 import { useEffect, useState } from "react";
 
-export type Entity = {
-  name: string;
-  kind: "todo";
-  setTasks: SetState<Task[]>;
-  tasks: Task[];
-};
+export type Entity =
+  | {
+      name: string;
+      kind: "todo";
+      tasks: Task[];
+      setTasks: SetState<Task[]>;
+    }
+  | {
+      name: string;
+      kind: "doc";
+      doc: string;
+      setDoc: SetState<string>;
+    };
 
 export interface Workspace {
   name: string;
@@ -18,13 +25,10 @@ export interface Workspace {
   setRoute: SetState<string>;
 }
 
-function useTasks() {
-  return useState<Task[]>([]);
-}
-
 export default function useWorkspace(): Workspace {
   const [route, setRoute] = useState("alpha_tasks");
-  const [tasks, setTasks] = useTasks();
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [doc, setDoc] = useState("# Hello World!");
 
   useEffect(() => {
     setTasks([
@@ -55,17 +59,30 @@ export default function useWorkspace(): Workspace {
         tasks,
         setTasks,
       },
+
+      alpha_doc: {
+        name: "Alpha docs",
+        kind: "doc",
+        doc,
+        setDoc,
+      },
+      beta_doc: {
+        name: "Beta docs",
+        kind: "doc",
+        doc,
+        setDoc,
+      },
     },
     entityLayout: [
       {
         kind: "group",
         name: "Project alpha",
-        children: [{ id: "alpha_tasks" }],
+        children: [{ id: "alpha_tasks" }, { id: "alpha_doc" }],
       },
       {
         kind: "group",
         name: "Project beta",
-        children: [{ id: "beta_tasks" }],
+        children: [{ id: "beta_tasks" }, { id: "alpha_doc" }],
       },
     ],
 
