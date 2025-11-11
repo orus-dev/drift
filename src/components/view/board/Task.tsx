@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -44,15 +45,15 @@ export default function BoardTask({
             <CardTitle>{task.title}</CardTitle>
             <CardDescription>{task.description}</CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-wrap gap-2 overflow-hidden">
+          <CardContent className="flex flex-wrap gap-1.5 overflow-hidden">
             {task.tags?.map((tag, i) => (
-              <span
+              <Badge
                 key={tag}
+                variant="outline"
                 style={getColor(tags[tag].color)}
-                className="inline-flex items-center py-0.5 px-1.5 rounded-sm max-w-full truncate"
               >
-                {tags[tag].name}
-              </span>
+                {tag}
+              </Badge>
             ))}
           </CardContent>
         </Card>

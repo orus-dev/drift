@@ -11,15 +11,17 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { TaskViewProps } from "../TaskView";
+import { getColor } from "@/lib/ui/color";
+import TableTask from "./Task";
 
-export function TableView({ tasks, setTasks }: TaskViewProps) {
+export function TableView({ tasks, setTasks, tags }: TaskViewProps) {
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="min-w-[200px]">Title</TableHead>
-          <TableHead>Status</TableHead>
+          <TableHead>Title</TableHead>
           <TableHead>Description</TableHead>
+          <TableHead>Status</TableHead>
           <TableHead>Tags</TableHead>
         </TableRow>
       </TableHeader>
@@ -35,32 +37,14 @@ export function TableView({ tasks, setTasks }: TaskViewProps) {
           </TableRow>
         ) : (
           tasks.map((task) => (
-            <TableRow key={task.id}>
-              <TableCell className="font-medium">{task.title}</TableCell>
-              <TableCell>
-                <Badge
-                  variant={
-                    task.status === "done"
-                      ? "default"
-                      : task.status === "in-progress"
-                      ? "secondary"
-                      : "outline"
-                  }
-                >
-                  {task.status}
-                </Badge>
-              </TableCell>
-              <TableCell className="max-w-[250px] truncate">
-                {task.description || "-"}
-              </TableCell>
-              <TableCell>
-                {task.tags?.map((tag) => (
-                  <Badge key={tag} variant="outline">
-                    {tag}
-                  </Badge>
-                ))}
-              </TableCell>
-            </TableRow>
+            <TableTask
+              key={task.id}
+              task={task}
+              setTask={(t) =>
+                setTasks((tasks) => tasks.map((c) => (c.id === t.id ? t : c)))
+              }
+              tags={tags}
+            />
           ))
         )}
       </TableBody>
