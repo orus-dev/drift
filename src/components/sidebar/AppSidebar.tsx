@@ -8,7 +8,7 @@ import {
   SidebarProvider,
   useSidebar,
 } from "@/components/ui/sidebar";
-import EntitySwitch, { Entity } from "./Entity";
+import EntitySwitch from "./Entity";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,27 +16,14 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
-
-interface Workspace {
-  name: string;
-  entities: Entity[];
-}
-
-const workspace: Workspace = {
-  name: "Personal Workspace",
-  entities: [
-    {
-      name: "Project alpha",
-      kind: "group",
-      children: [{ name: "Tasks", kind: "todo" }],
-    },
-  ],
-};
+import { Workspace } from "@/hooks/workspace";
 
 export default function AppSidebar({
   children,
+  workspace,
 }: Readonly<{
   children: React.ReactNode;
+  workspace: Workspace;
 }>) {
   return (
     <SidebarProvider>

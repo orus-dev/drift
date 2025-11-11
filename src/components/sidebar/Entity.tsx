@@ -11,6 +11,7 @@ import { Collapsible, CollapsibleContent } from "../ui/collapsible";
 import { ChevronDown } from "lucide-react";
 
 export interface Entity {
+  id: string;
   name: string;
   kind: "group" | "todo";
   children?: Entity[];
