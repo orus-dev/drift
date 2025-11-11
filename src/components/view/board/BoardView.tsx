@@ -4,11 +4,10 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { PlusIcon } from "lucide-react";
-import { SetState, Task } from "@/lib/types";
 import BoardTask from "./Task";
-import { Color } from "@/lib/ui/color";
+import { TaskViewProps } from "../TaskView";
 
-const columnLabels: Record<string, string> = {
+const statusLabels: Record<string, string> = {
   todo: "To do",
   inprogress: "In progress",
   done: "Done",
@@ -19,12 +18,7 @@ export default function BoardView({
   tasks,
   setTasks,
   createTask,
-}: {
-  tags: Record<string, { color: Color; name: string }>;
-  tasks: Task[];
-  setTasks: SetState<Task[]>;
-  createTask: (status: string) => void;
-}) {
+}: TaskViewProps) {
   function onDragEnd(result: any) {
     const { draggableId, source, destination } = result;
     if (!destination) return;
@@ -56,7 +50,7 @@ export default function BoardView({
     <div className="w-full h-full flex flex-col gap-6">
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-          {Object.keys(columnLabels).map((status) => (
+          {Object.keys(statusLabels).map((status) => (
             <Droppable key={status} droppableId={status}>
               {(provided) => (
                 <Card
@@ -66,7 +60,7 @@ export default function BoardView({
                 >
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">
-                      <span>{columnLabels[status]}</span>
+                      <span>{statusLabels[status]}</span>
                       <Button
                         size="sm"
                         className="ml-auto"
