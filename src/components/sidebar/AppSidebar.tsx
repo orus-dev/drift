@@ -51,8 +51,8 @@ export default function AppSidebar({
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-            {workspace.entities.map((entity, i) => (
-              <EntitySwitch entity={entity} key={i} />
+            {workspace.entityLayout.map((entity, i) => (
+              <EntitySwitch entity={entity} workspace={workspace} key={i} />
             ))}
           </SidebarMenu>
         </SidebarContent>

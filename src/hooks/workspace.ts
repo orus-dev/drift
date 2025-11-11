@@ -2,19 +2,21 @@ import { SidebarEntity } from "@/components/sidebar/Entity";
 import { SetState, Task } from "@/lib/types";
 import { useEffect, useState } from "react";
 
-export interface Entity {
-  id: string;
+export type Entity = {
   name: string;
-}
+  kind: "todo";
+  setTasks: SetState<Task[]>;
+  tasks: Task[];
+};
 
-export type Workspace = {
+export interface Workspace {
   name: string;
-  entities: SidebarEntity[];
-  entityData: Record<string, any>;
+  entityLayout: SidebarEntity[];
+  entities: Record<string, Entity>;
 
   route: string;
   setRoute: SetState<string>;
-};
+}
 
 function useTasks() {
   return useState<Task[]>([]);
@@ -40,21 +42,32 @@ export default function useWorkspace(): Workspace {
 
   return {
     name: "Personal Workspace",
-    entities: [
-      {
-        id: "alpha",
-        name: "Project alpha",
-        kind: "group",
-        children: [{ id: "alpha_tasks", name: "Tasks", kind: "todo" }],
-      },
-    ],
-
-    entityData: {
+    entities: {
       alpha_tasks: {
+        name: "Alpha tasks",
+        kind: "todo",
+        tasks,
+        setTasks,
+      },
+      beta_tasks: {
+        name: "Beta tasks",
+        kind: "todo",
         tasks,
         setTasks,
       },
     },
+    entityLayout: [
+      {
+        kind: "group",
+        name: "Project alpha",
+        children: [{ id: "alpha_tasks" }],
+      },
+      {
+        kind: "group",
+        name: "Project beta",
+        children: [{ id: "beta_tasks" }],
+      },
+    ],
 
     route,
     setRoute,

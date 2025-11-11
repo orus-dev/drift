@@ -5,6 +5,7 @@ import AppSidebar, { SidebarTrigger } from "@/components/sidebar/AppSidebar";
 import TaskView from "@/components/view/TaskView";
 import useWorkspace from "@/hooks/workspace";
 import { Task } from "@/lib/types";
+import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const id = (prefix = "t") =>
@@ -20,7 +21,7 @@ export default function Workspace() {
       title: "New task",
       status: status,
     };
-    workspace.entityData[workspace.route].setTasks((c: Task[]) => [...c, task]);
+    workspace.entities[workspace.route].setTasks((c: Task[]) => [...c, task]);
   };
 
   return (
@@ -30,14 +31,16 @@ export default function Workspace() {
           <>
             <SidebarTrigger className="w-full px-4">
               <div className="px-4">
-                <header className="w-full border-b-2 pb-3 pt-2 hover:bg-accent/20">
-                  Workspace
+                <header className="w-full border-b-2 pb-3 pt-2 hover:bg-accent/20 flex items-center text-foreground/90">
+                  {workspace.name}
+                  <ChevronRight className="h-5" />
+                  {workspace.entities[workspace.route].name}
                 </header>
               </div>
             </SidebarTrigger>
             <TaskView
-              tasks={workspace.entityData[workspace.route].setTasks}
-              setTasks={workspace.entityData[workspace.route].tasks}
+              tasks={workspace.entities[workspace.route].tasks}
+              setTasks={workspace.entities[workspace.route].setTasks}
               createTask={createTask}
               tags={{
                 website: { color: "yellow", name: "Website" },
