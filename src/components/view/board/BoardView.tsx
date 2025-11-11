@@ -53,7 +53,7 @@ export default function BoardView({
   }
 
   return (
-    <div className="p-6 w-full h-full flex flex-col gap-6">
+    <div className="w-full h-full flex flex-col gap-6">
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
           {Object.keys(columnLabels).map((status) => (

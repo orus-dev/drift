@@ -2,6 +2,7 @@
 
 import AppSidebar, { SidebarTrigger } from "@/components/AppSidebar";
 import BoardView from "@/components/view/board/BoardView";
+import TaskView from "@/components/view/TaskView";
 import { Task } from "@/lib/types";
 import { useEffect, useState } from "react";
 
@@ -43,7 +44,7 @@ export default function Workspace() {
           </header>
         </div>
       </SidebarTrigger>
-      <BoardView
+      <TaskView
         tasks={tasks}
         setTasks={setTasks}
         createTask={createTask}
