@@ -1,13 +1,21 @@
-import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
+  SidebarMenu,
   SidebarProvider,
   useSidebar,
-} from "./ui/sidebar";
+} from "@/components/ui/sidebar";
+import EntitySwitch, { Entity } from "./Entity";
+
+const workspaceEntities: Entity[] = [
+  {
+    name: "Project alpha",
+    kind: "group",
+    children: [{ name: "Tasks", kind: "todo" }],
+  },
+];
 
 export default function AppSidebar({
   children,
@@ -18,7 +26,13 @@ export default function AppSidebar({
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader />
-        <SidebarContent></SidebarContent>
+        <SidebarContent>
+          <SidebarMenu>
+            {workspaceEntities.map((entity, i) => (
+              <EntitySwitch entity={entity} key={i} />
+            ))}
+          </SidebarMenu>
+        </SidebarContent>
         <SidebarFooter />
       </Sidebar>
       <main className="w-svw">{children}</main>

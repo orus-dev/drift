@@ -1,6 +1,6 @@
 "use client";
 
-import AppSidebar, { SidebarTrigger } from "@/components/AppSidebar";
+import AppSidebar, { SidebarTrigger } from "@/components/sidebar/AppSidebar";
 import BoardView from "@/components/view/board/BoardView";
 import TaskView from "@/components/view/TaskView";
 import { Task } from "@/lib/types";
