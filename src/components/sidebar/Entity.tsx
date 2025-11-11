@@ -9,15 +9,14 @@ import {
 } from "../ui/sidebar";
 import { Collapsible, CollapsibleContent } from "../ui/collapsible";
 import { ChevronDown } from "lucide-react";
+import { Entity } from "@/hooks/workspace";
 
-export interface Entity {
-  id: string;
-  name: string;
+export interface SidebarEntity extends Entity {
   kind: "group" | "todo";
-  children?: Entity[];
+  children?: SidebarEntity[];
 }
 
-export default function EntitySwitch({ entity }: { entity: Entity }) {
+export default function EntitySwitch({ entity }: { entity: SidebarEntity }) {
   switch (entity.kind) {
     case "group":
       return (
