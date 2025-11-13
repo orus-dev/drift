@@ -122,3 +122,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

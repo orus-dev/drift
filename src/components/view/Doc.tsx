@@ -19,17 +19,19 @@ export default function DocView({
   }, [editor]);
 
   return (
-    <BlockNoteView
-      defaultValue={doc}
-      editor={editor}
-      shadCNComponents={{}}
-      className="w-full h-svh px-6 mt-4"
-      onChange={async () => {
-        if (editor) {
-          console.log(editor.blocksToMarkdownLossy(editor.document));
-          setDoc(editor.blocksToMarkdownLossy(editor.document));
-        }
-      }}
-    />
+    <div className="h-full w-3xl mx-auto bg-accent/20 rounded-2xl px-4 py-2 docs-view" onClick={() => editor.focus()}>
+      <BlockNoteView
+        defaultValue={doc}
+        editor={editor}
+        shadCNComponents={{}}
+        className="w-full focus:outline-none focus:ring-0 appearance-none"
+        onChange={async () => {
+          if (editor) {
+            console.log(editor.blocksToMarkdownLossy(editor.document));
+            setDoc(editor.blocksToMarkdownLossy(editor.document));
+          }
+        }}
+      />
+    </div>
   );
 }
