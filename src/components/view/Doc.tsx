@@ -10,10 +10,16 @@ import Table from "@editorjs/table";
 import Delimiter from "@editorjs/delimiter";
 import Warning from "@editorjs/warning";
 import InlineCode from "@editorjs/inline-code";
+import { OutputData } from "@editorjs/editorjs";
 
-export default function DocView() {
+export default function DocView({
+  doc,
+  setDoc,
+}: {
+  doc: OutputData;
+  setDoc: (data: OutputData) => void;
+}) {
   const holderRef = useRef<HTMLDivElement | null>(null);
-  const [doc, setDoc] = useState({ blocks: [] });
 
   useEffect(() => {
     let editor: any;
