@@ -41,6 +41,7 @@ export default function DocView() {
         data: doc,
         async onChange() {
           const savedData = await editor.save();
+          console.log("Document data:", savedData);
           setDoc(savedData);
         },
       });
@@ -53,8 +54,8 @@ export default function DocView() {
   }, []);
 
   return (
-    <div className="h-full w-3xl mx-auto bg-accent/20 rounded-2xl px-4 py-2">
-      <div ref={holderRef} className="docs-view min-h-[400px]" />
+    <div className="h-full w-3xl mx-auto bg-accent/20 rounded-2xl p-4">
+      <div ref={holderRef} className="docs-view" />
     </div>
   );
 }
