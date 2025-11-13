@@ -23,6 +23,7 @@ export default function Router({ workspace }: { workspace: Workspace }) {
 
       return (
         <TaskView
+          key={entity.name}
           tasks={entity.tasks}
           setTasks={entity.setTasks}
           createTask={createTask}
@@ -34,6 +35,8 @@ export default function Router({ workspace }: { workspace: Workspace }) {
         />
       );
     case "doc":
-      return <DocView doc={entity.doc} setDoc={entity.setDoc} />;
+      return (
+        <DocView key={entity.name} doc={entity.doc} setDoc={entity.setDoc} />
+      );
   }
 }
