@@ -129,3 +129,4 @@
 }
 
 .ce-header { font-size: 32px !important; font-weight: bolder; }
+.ce-block__content { margin: 0; }

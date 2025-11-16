@@ -79,10 +79,42 @@ export default function DocView({
           quote: { class: Quote, inlineToolbar: true },
           code: Code,
           table: Table,
-          header: Header,
           delimiter: Delimiter,
           warning: Warning,
           inlineCode: InlineCode,
+          h1: {
+            class: Header as unknown as EditorJS.ToolConstructable,
+            config: {
+              placeholder: "Header 1",
+              levels: [1],
+              defaultLevel: 1,
+            },
+            toolbox: {
+              title: "H1",
+            },
+          },
+          h2: {
+            class: Header as unknown as EditorJS.ToolConstructable,
+            config: {
+              placeholder: "Header 2",
+              levels: [2],
+              defaultLevel: 1,
+            },
+            toolbox: {
+              title: "H2",
+            },
+          },
+          h3: {
+            class: Header as unknown as EditorJS.ToolConstructable,
+            config: {
+              placeholder: "Header 3",
+              levels: [3],
+              defaultLevel: 3,
+            },
+            toolbox: {
+              title: "H3",
+            },
+          },
         },
         data: doc,
         async onChange() {
@@ -99,5 +131,5 @@ export default function DocView({
     };
   }, []);
 
-  return <div ref={holderRef} className="docs-view h-max w-max" />;
+  return <div ref={holderRef} className="docs-view h-max w-full" />;
 }

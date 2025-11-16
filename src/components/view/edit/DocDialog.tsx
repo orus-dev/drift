@@ -31,7 +31,12 @@ export default function DocDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-h-[80vh] md:max-w-3xl! lg:max-w-4xl!">
+      <DialogContent
+        className="max-h-[80vh] md:max-w-3xl! lg:max-w-4xl!"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <DialogTitle>{task.title} - Notes</DialogTitle>
         <DialogDescription>{task.description}</DialogDescription>
         <DialogHeader>
