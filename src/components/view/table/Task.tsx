@@ -3,7 +3,7 @@ import { SheetTrigger } from "@/components/ui/sheet";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Task } from "@/lib/types";
 import { Color, getColor } from "@/lib/ui/color";
-import TaskEdit from "../TaskEdit";
+import TaskEdit from "../edit/TaskEdit";
 
 export default function TableTask({
   task,

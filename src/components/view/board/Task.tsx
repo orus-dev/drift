@@ -10,7 +10,10 @@ import { SheetTrigger } from "@/components/ui/sheet";
 import { Task } from "@/lib/types";
 import { Color, getColor } from "@/lib/ui/color";
 import { DraggableProvided } from "@hello-pangea/dnd";
-import TaskEdit from "../TaskEdit";
+import TaskEdit from "../edit/TaskEdit";
+import { Button } from "@/components/ui/button";
+import { NotepadText } from "lucide-react";
+import DocDialog from "../edit/DocDialog";
 
 export default function BoardTask({
   task,
@@ -33,7 +36,21 @@ export default function BoardTask({
           className="bg-background"
         >
           <CardHeader>
-            <CardTitle>{task.title}</CardTitle>
+            <CardTitle className="flex items-center justify-between">
+              <span>{task.title}</span>
+              <DocDialog task={task} setTask={setTask} tags={tags}>
+                <Button
+                  size="sm"
+                  className="ml-auto"
+                  variant="outline"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <NotepadText />
+                </Button>
+              </DocDialog>
+            </CardTitle>
             <CardDescription>{task.description}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-1.5 overflow-hidden">

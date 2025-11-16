@@ -3,7 +3,7 @@
 import { Workspace } from "@/hooks/workspace";
 import { Task } from "@/lib/types";
 import TaskView from "./view/TaskView";
-import DocView from "./view/Doc";
+import DocView from "./view/DocView";
 
 const id = (prefix = "t") =>
   `${prefix}_${Math.random().toString(36).slice(2, 9)}`;

@@ -11,20 +11,21 @@ import {
 import { Task } from "@/lib/types";
 import { Color, getColor } from "@/lib/ui/color";
 import { DraggableProvided } from "@hello-pangea/dnd";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTrigger,
-} from "../ui/dialog";
-import DocView from "./Doc";
+} from "../../ui/dialog";
+import DocView from "../DocView";
 import { useState } from "react";
 import { OutputData } from "@editorjs/editorjs";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { ScrollArea } from "../ui/scroll-area";
-import { Badge } from "../ui/badge";
+import { ScrollArea } from "../../ui/scroll-area";
+import { Badge } from "../../ui/badge";
+import DocDialog from "./DocDialog";
 
 export default function TaskEdit({
   task,
@@ -37,8 +38,6 @@ export default function TaskEdit({
   tags: Record<string, { color: Color; name: string }>;
   children: React.ReactNode;
 }) {
-  const [doc, setDoc] = useState<OutputData>({ blocks: [] });
-
   return (
     <Sheet>
       {children}
@@ -83,32 +82,9 @@ export default function TaskEdit({
           </div>
           <div className="grid gap-3">
             <Label>Notes</Label>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button>Open notes</Button>
-              </DialogTrigger>
-              <DialogContent className="max-h-[80vh] md:max-w-3xl! lg:max-w-4xl!">
-                <DialogTitle>{task.title} - Notes</DialogTitle>
-                <DialogDescription>{task.description}</DialogDescription>
-                <DialogHeader>
-                  <div className="flex flex-wrap gap-1.5 overflow-hidden">
-                    {task.tags?.map((tag, i) => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        style={getColor(tags[tag].color)}
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </DialogHeader>
-
-                <ScrollArea className="h-[60vh]">
-                  <DocView key={0} doc={doc} setDoc={setDoc} />
-                </ScrollArea>
-              </DialogContent>
-            </Dialog>
+            <DocDialog task={task} setTask={setTask} tags={tags}>
+              <Button>Open notes</Button>
+            </DocDialog>
           </div>
         </div>
       </SheetContent>
