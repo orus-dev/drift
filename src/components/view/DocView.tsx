@@ -98,7 +98,7 @@ export default function DocView({
             config: {
               placeholder: "Header 2",
               levels: [2],
-              defaultLevel: 1,
+              defaultLevel: 2,
             },
             toolbox: {
               title: "H2",

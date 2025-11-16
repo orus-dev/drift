@@ -128,5 +128,80 @@
   box-shadow: none !important;
 }
 
-.ce-header { font-size: 32px !important; font-weight: bolder; }
+h1.ce-header {
+  font-size: 36px !important;
+  font-weight: bolder;
+}
+
+h2.ce-header {
+  font-size: 30px !important;
+  font-weight: bolder;
+}
+
+h3.ce-header {
+  font-size: 24px !important;
+  font-weight: bolder;
+}
+
+
 .ce-block__content { margin: 0; }
+.ce-toolbar__content { margin: 0; margin-left: 40px; }
+
+.ce-popover__container {
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border) !important;
+}
+
+.cdx-search-field {
+  color: var(-foreground);
+  background-color: transparent;
+  border: 1px solid var(--border-input);
+  border-radius: 0.375rem;
+  height: 2.25rem;
+  width: 100%;
+  min-width: 0;
+  padding: 0.25rem 0.75rem;
+  font-size: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  outline: none;
+  transition: color 0.2s, box-shadow 0.2s;
+}
+
+.ce-popover-item {
+  color: var(--popover-foreground);
+}
+
+.ce-popover-item:hover {
+  background-color: var(--accent) !important;
+  color: var(--accent-foreground) !important;
+}
+
+.ce-toolbar__plus {
+  visibility: hidden !important;
+}
+
+.ce-toolbar__settings-btn {
+  color: var(--foreground) !important;
+  position: fixed !important;
+  transform: translateX(-11px) translateY(18px) !important;
+  z-index: 999;
+}
+
+.ce-toolbar__settings-btn:hover {
+  background-color: var(--accent) !important;
+  color: var(--accent-foreground) !important;
+}
+
+.ce-block--selected .ce-block__content {
+  background-color: var(--accent) !important;
+}
+
+.ce-inline-tool {
+  color: var(--popover-foreground) !important;
+}
+
+.ce-inline-tool:hover {
+  color: var(--popover-foreground) !important;
+  background-color: var(--accent) !important;
+}
