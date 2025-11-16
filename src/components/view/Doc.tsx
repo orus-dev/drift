@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
@@ -59,9 +59,5 @@ export default function DocView({
     };
   }, []);
 
-  return (
-    <div className="h-full w-3xl mx-auto bg-accent/20 rounded-2xl p-4">
-      <div ref={holderRef} className="docs-view" />
-    </div>
-  );
+  return <div ref={holderRef} className="docs-view h-max" />;
 }

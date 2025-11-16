@@ -36,7 +36,9 @@ export default function Router({ workspace }: { workspace: Workspace }) {
       );
     case "doc":
       return (
-        <DocView key={entity.name} doc={entity.doc} setDoc={entity.setDoc} />
+        <div className="h-full w-3xl mx-auto bg-accent/20 rounded-2xl p-4">
+          <DocView key={entity.name} doc={entity.doc} setDoc={entity.setDoc} />
+        </div>
       );
   }
 }

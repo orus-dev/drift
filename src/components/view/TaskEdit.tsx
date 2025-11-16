@@ -11,6 +11,13 @@ import {
 import { Task } from "@/lib/types";
 import { Color, getColor } from "@/lib/ui/color";
 import { DraggableProvided } from "@hello-pangea/dnd";
+import { Button } from "../ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import DocView from "./Doc";
+import { useState } from "react";
+import { OutputData } from "@editorjs/editorjs";
+import { DialogTitle } from "@radix-ui/react-dialog";
+import { ScrollArea } from "../ui/scroll-area";
 
 export default function TaskEdit({
   task,
@@ -23,6 +30,8 @@ export default function TaskEdit({
   tags: Record<string, { color: Color; name: string }>;
   children: React.ReactNode;
 }) {
+  const [doc, setDoc] = useState<OutputData>({ blocks: [] });
+
   return (
     <Sheet>
       {children}
@@ -64,6 +73,21 @@ export default function TaskEdit({
               onValueChange={(tags) => setTask({ ...task, tags })}
               defaultValue={task.tags}
             />
+          </div>
+          <div className="grid gap-3">
+            <Label>Notes</Label>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button>Open notes</Button>
+              </DialogTrigger>
+              <DialogContent className="max-h-[80vh]">
+                <DialogTitle>{task.title} - Notes</DialogTitle>
+
+                <ScrollArea className="h-[60vh] mt-4">
+                  <DocView key={0} doc={doc} setDoc={setDoc} />
+                </ScrollArea>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </SheetContent>

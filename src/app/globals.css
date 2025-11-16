@@ -128,4 +128,4 @@
   box-shadow: none !important;
 }
 
-.ce-header { font-size: 32px !important; }
+.ce-header { font-size: 32px !important; font-weight: bolder; }
